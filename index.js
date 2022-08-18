@@ -48,3 +48,23 @@ function playRound(playerSelection, computerSelection) {
 }
 
 // console.log(playRound("RoCk", getComputerChoice()))
+
+function game() {
+    let player = 0, computer = 0;
+    for (let i = 0; i < 5; i++) {
+        let round = playRound(prompt('Rock Paper Scissors'), getComputerChoice());
+        console.log(round);
+        if (round[4] === "W") {
+            player++;
+        } else if (round[4] === "L") {
+            computer++;
+        } else {
+            player++;
+            computer++;
+        }
+    }
+    console.log(player === computer ? "TIED" : player > computer ? "YOU WON!" : "YOU LOST")
+    console.log(`Score: ${player} - ${computer}`);
+}
+
+game();
