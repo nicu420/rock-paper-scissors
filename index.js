@@ -1,70 +1,92 @@
+const buttons = document.querySelectorAll('.choice');
+
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', () => playRound(buttons[i].id, getComputerChoice()));
+}
+
 // Generate a random choice
 function getComputerChoice() {
     let r = Math.floor(Math.random() * 3) + 1;
     switch (r) {
         case 1:
-            return "Rock";
+            return "rock";
         case 2:
-            return "Paper";
+            return "paper";
         case 3:
-            return "Scissors";
+            return "scissors";
     }
 }
 
-// console.log(getComputerChoice())
+let
+    text = document.getElementById('text'),
+    playerScore = document.getElementById('player-score'),
+    computerScore = document.getElementById('computer-score'),
+    player = 0,
+    computer = 0;
 
 // Given 2 selections, check who won
 function playRound(playerSelection, computerSelection) {
-    let player = playerSelection.toLowerCase();
-    let computer = computerSelection.toLowerCase();
 
-    if (player === computer) {
-        return "Tied";
-    }
+    console.log(playerSelection, computerSelection);
 
-    switch (player) {
-        case "rock":
-            if (computer === "paper") {
-                return "You Lose! Paper beats Rock"
-            }
-            if (computer === "scissors") {
-                return "You Won! Rock beats Scissors"
-            }
-        case "paper":
-            if (computer === "scissors") {
-                return "You Lose! Scissors beats paper"
-            }
-            if (computer === "rock") {
-                return "You Won! Paper beats Rock"
-            }
-        case "scissors":
-            if (computer === "rock") {
-                return "You Lose! Rock beats Scissors"
-            }
-            if (computer === "paper") {
-                return "You Win! Scissors beats paper"
-            }
-    }
-}
-
-// console.log(playRound("RoCk", getComputerChoice()))
-
-function game() {
-    let player = 0, computer = 0;
-    for (let i = 0; i < 5; i++) {
-        let round = playRound(prompt('Rock Paper Scissors'), getComputerChoice());
-        console.log(round);
-        if (round[4] === "W") {
-            player++;
-        } else if (round[4] === "L") {
-            computer++;
-        } else {
-            player++;
-            computer++;
+    if (playerSelection === computerSelection) {
+        text.textContent = "Tied";
+        // computer++;
+        // player++;
+        // playerScore.textContent = player;
+        // computerScore.textContent = computer;
+    } else {
+        switch (playerSelection) {
+            case "rock":
+                if (computerSelection === "paper") {
+                    text.textContent = "You Lose! Paper beats Rock"
+                    computer++;
+                }
+                if (computerSelection === "scissors") {
+                    text.textContent = "You Won! Rock beats Scissors"
+                    player++;
+                }
+                break;
+            case "paper":
+                if (computerSelection === "scissors") {
+                    text.textContent = "You Lose! Scissors beats paper"
+                    computer++;
+                }
+                if (computerSelection === "rock") {
+                    text.textContent = "You Won! Paper beats Rock"
+                    player++;
+                }
+                break;
+            case "scissors":
+                if (computerSelection === "rock") {
+                    text.textContent = "You Lose! Rock beats Scissors"
+                    computer++;
+                }
+                if (computerSelection === "paper") {
+                    text.textContent = "You Win! Scissors beats paper"
+                    player++;
+                }
+                break;
         }
     }
-    console.log(player === computer ? "TIED" : player > computer ? "YOU WON!" : "YOU LOST")
-    console.log(`Score: ${player} - ${computer}`);
-}
 
-game();
+    playerScore.textContent = player;
+    computerScore.textContent = computer;
+
+    if (player >= 5 || computer >= 5) {
+        if (player === computer) {
+            text.textContent = "EPIC TIE";
+            player = 0;
+            computer = 0;
+        } else if (player === 5) {
+            text.textContent = "YOU WON";
+            player = 0;
+            computer = 0;
+        } else if (computer === 5) {
+            text.textContent = "YOU LOST";
+            player = 0;
+            computer = 0;
+        }
+    }
+
+}
